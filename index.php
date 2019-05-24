@@ -1,20 +1,29 @@
 <?php
 ini_set("display_errors",1);
 if($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $conexao = mysqli_connect('127.0.0.1', 'root', 'root', 'injection');
+
+    /* No php o cifrão ($) significa uma variável */
+    /* A função mysqli_connect faz a conexão com o banco de dados */
+
+    $conexao = mysqli_connect('127.0.0.1' /* ip do host */, 'root' /* Usuário do BD */, 'root' /* Senha do BD */, 'injection' /* Nome do BD */);
     $usuario = $_POST['usuario'];
     $senha = $_POST['senha'];
+
+    /* Essa parte faz consultas no BD */
+
     $query = "select usuario, senha from usuario where usuario='$usuario' and senha='$senha'";
     $result = mysqli_query($conexao, $query);
     $rows = mysqli_num_rows($result);
     if($rows) {
-        echo "Logado com sucesso";
+        echo "Logado com sucesso"; /* a resposta esperada caso o usuário consiga logar */
     }
     else {
-        echo "Não logou. Tente novamente.";
+        echo "Não logou. Tente novamente."; /* a resposta esperada caso o usuário não consiga logar */
     }
 }
 ?>
+
+<!-- A página principal -->
 
 <!DOCTYPE html>
 <html lang="en">
